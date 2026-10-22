@@ -18,3 +18,5 @@ The extension requests no additional scopes and does not store or handle authent
 ## Development
 
 Run `npm install`, then `npm test`. In a headless Linux container, run `xvfb-run -a npm test`. Press `F5` to launch an Extension Development Host and try the status-bar button.
+
+[![F5 button view](<images/F5 button view.png>)](<images/F5 button view.png>)
