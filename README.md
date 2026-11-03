@@ -5,15 +5,18 @@
 
 # IDE LogButton
 
-Codespaces stack for IDE login buttons. This repository currently includes a VS Code extension that signs in to GitHub through VS Code's built-in authentication provider.
+Codespaces stack for IDE login buttons. This repository currently includes a VS Code extension that signs in to GitHub through GitHub CLI.
 
 ## VS Code
 
-- Select **Sign in to GitHub** in the status bar, or run **GitHub: Sign In** from the Command Palette.
-- After signing in, the status bar shows the active account. Select it or run **GitHub: Switch Account** to choose another account.
-- To sign out, use the GitHub account entry in VS Code's Accounts menu. The status bar updates when the session changes.
+- Install [GitHub CLI](https://cli.github.com/) and make sure `gh` is available on the VS Code extension host's `PATH`.
+- Select **Sign in with GitHub CLI** in the status bar, or run **GitHub CLI: Sign In** from the Command Palette. The extension runs `gh auth login` in a VS Code terminal.
+- After signing in, the extension configures Git credential access with `gh auth setup-git` and syncs open Git repositories. The status bar shows the active GitHub CLI account. Select it or run **GitHub CLI: Switch Account** to run `gh auth switch`.
+- By default, authenticated open repositories sync when VS Code launches. Run **Git: Sync Workspace Repositories** to sync manually. Set `github-sign-in.syncOnLaunch` to `false` to disable launch sync.
+- For GitHub Enterprise, set `github-sign-in.host` to the enterprise hostname before signing in.
+- To sign out, run `gh auth logout` in a terminal. The status bar refreshes when VS Code regains focus or when you run **GitHub CLI: Refresh Status**.
 
-The extension requests no additional scopes and does not store or handle authentication tokens. VS Code manages account consent, sign-in, and credentials.
+The extension reads `gh auth status` to show the active account. It does not store or handle authentication tokens; GitHub CLI manages authentication and credentials.
 
 ## Development
 

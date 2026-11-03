@@ -1,7 +1,7 @@
 {
   "name": "github-sign-in",
   "displayName": "GitHub Sign In",
-  "description": "Sign in to GitHub from VS Code using the built-in authentication provider.",
+  "description": "Sign in to GitHub from VS Code using GitHub CLI.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.140.0"
@@ -12,18 +12,44 @@
   "activationEvents": [
     "onStartupFinished"
   ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "github-sign-in.signIn",
-        "title": "GitHub: Sign In"
+        "title": "GitHub CLI: Sign In"
       },
       {
         "command": "github-sign-in.switchAccount",
-        "title": "GitHub: Switch Account"
+        "title": "GitHub CLI: Switch Account"
+      },
+      {
+        "command": "github-sign-in.refresh",
+        "title": "GitHub CLI: Refresh Status"
+      },
+      {
+        "command": "github-sign-in.syncWorkspace",
+        "title": "Git: Sync Workspace Repositories"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "GitHub Sign In",
+      "properties": {
+        "github-sign-in.host": {
+          "type": "string",
+          "default": "github.com",
+          "description": "GitHub or GitHub Enterprise hostname used by GitHub CLI."
+        },
+        "github-sign-in.syncOnLaunch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Synchronize open Git repositories when VS Code launches and the configured GitHub CLI account is authenticated."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
