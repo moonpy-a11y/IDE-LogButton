@@ -2,6 +2,7 @@
   "name": "github-sign-in",
   "displayName": "GitHub Sign In",
   "description": "Sign in to GitHub from VS Code using GitHub CLI.",
+  "publisher": "moonpy-a11y",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.140.0"
@@ -10,7 +11,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onUri"
   ],
   "extensionDependencies": [
     "vscode.git"
@@ -33,6 +35,18 @@
       {
         "command": "github-sign-in.syncWorkspace",
         "title": "Git: Sync Workspace Repositories"
+      },
+      {
+        "command": "github-sign-in.signInWithGoogle",
+        "title": "Account: Sign In with Google"
+      },
+      {
+        "command": "github-sign-in.signInWithApple",
+        "title": "Account: Sign In with Apple"
+      },
+      {
+        "command": "github-sign-in.clearProviderAccount",
+        "title": "Account: Clear Local Linked Account"
       }
     ],
     "configuration": {
@@ -47,6 +61,11 @@
           "type": "boolean",
           "default": true,
           "description": "Synchronize open Git repositories when VS Code launches and the configured GitHub CLI account is authenticated."
+        },
+        "github-sign-in.authBrokerUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Base URL of your self-hosted Google/Apple and GitHub account-linking broker (HTTPS required except on localhost)."
         }
       }
     }
@@ -57,7 +76,10 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test && node --test backend/auth-broker.test.mjs"
+  },
+  "dependencies": {
+    "jose": "^6.1.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.140.0",
